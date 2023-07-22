@@ -43,15 +43,10 @@ class _WebViewAppState extends State<WebViewApp> {
             setState(() {
               _isLoading = false;
             });
-            // final title = await _controller.getTitle();
-            // setState(() {
-            //   if (title != null) {
-            //     _title = title;
-            //   }
-            // });
           },
         ),
       )
+      ..setUserAgent("ユーザーエージェント変更：webview-from-flutter-app")
       ..loadRequest(
         Uri.parse('http://localhost:3000/'),
       );
@@ -60,48 +55,62 @@ class _WebViewAppState extends State<WebViewApp> {
   /// アプリのUIを構築
   late final WebViewController _controller;
   bool _isLoading = false;
-  // String _title = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(_title),
-      // ),
+      appBar: AppBar(
+        title: Text('ここにタイトル'),
+        leading: _buildProfileIconButton(),
+      ),
       body: Column(
         children: [
           if (_isLoading) const LinearProgressIndicator(),
           Expanded(
             child: WebViewWidget(controller: _controller),
           ),
-          Container(
-            color: Colors.lightBlue,
-            child: SafeArea(
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(
-                      Icons.arrow_back,
-                    ),
-                    color: Colors.white,
-                    onPressed: () async {
-                      _controller.goBack();
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.arrow_forward,
-                    ),
-                    color: Colors.white,
-                    onPressed: () async {
-                      _controller.goForward();
-                    },
-                  ),
-                ],
-              ),
-            ),
-          )
+          // Container(
+          //   color: Colors.lightBlue,
+          //   child: SafeArea(
+          //     child: Row(
+          //       children: [
+          //         IconButton(
+          //           icon: const Icon(
+          //             Icons.arrow_back,
+          //           ),
+          //           color: Colors.white,
+          //           onPressed: () async {
+          //             _controller.goBack();
+          //           },
+          //         ),
+          //         IconButton(
+          //           icon: const Icon(
+          //             Icons.arrow_forward,
+          //           ),
+          //           color: Colors.white,
+          //           onPressed: () async {
+          //             _controller.goForward();
+          //           },
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // )
         ],
       ),
+    );
+  }
+
+  Widget _buildProfileIconButton() {
+    const iconSize = 32.0;
+    return IconButton(
+      icon: Icon(
+        Icons.arrow_back,
+        size: iconSize,
+      ),
+      // onPressed: () => print('中身'));
+      onPressed: () async {
+        _controller.goBack();
+      },
     );
   }
 }
