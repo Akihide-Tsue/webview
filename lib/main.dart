@@ -107,8 +107,8 @@ class _WebViewAppState extends State<WebViewApp> {
         Icons.arrow_back,
         size: iconSize,
       ),
-      // onPressed: () => print('中身'));
       onPressed: () async {
+        print('中身');
         _controller.goBack();
       },
     );
